@@ -19,6 +19,7 @@
 UserSettings/
 
 # Rider / Visual Studio / VSCode 등 IDE 설정
+.vs
 .vscode/
 .idea/
 *.csproj
