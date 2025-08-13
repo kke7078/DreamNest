@@ -17,10 +17,10 @@ namespace mp
         
         private int slotColCount = 7;
         private int slotRowCount = 10;
-
         private float slotSpacing = 0f;
         private float slotPadding = 0f;
-        private float scrollWidth = 17f;
+
+        private Vector2 lastSize;   //실제로 화면의 크기가 변경되었는지 확인하기 위한 변수
 
         private int SlotTotalCount => slotColCount * slotRowCount;
 
@@ -32,7 +32,10 @@ namespace mp
             slotSpacing = gridLayout.spacing.x;
             slotPadding = gridLayout.padding.left + gridLayout.padding.right;
 
-            StartCoroutine(SetupSlotsCoroutine());
+            lastSize = rectTransform.rect.size;  //초기 크기를 저장
+
+            CreateSlot();
+            UpdateCellSize();
         }
 
         private void OnRectTransformDimensionsChange()  //rectTransform 의 크기가 변경되었을 때 호출됨
@@ -41,15 +44,13 @@ namespace mp
             if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
             if(gridLayout == null) gridLayout = slotParent.GetComponent<GridLayoutGroup>();
 
-            UpdateCellSize();
-        }
+            Vector2 currentSize = rectTransform.rect.size;
 
-        IEnumerator SetupSlotsCoroutine()
-        {
-            yield return new WaitForEndOfFrame();
-
-            CreateSlot();
-            UpdateCellSize();
+            if (currentSize != lastSize)
+            {
+                lastSize = currentSize;  //현재 크기를 저장
+                UpdateCellSize();
+            }
         }
 
         private void CreateSlot()
@@ -72,16 +73,15 @@ namespace mp
         {
             float boardWidth = Mathf.Min(rectTransform.rect.width, 1100f);  //보드 최대 너비값 설정
             
-            float slotWidth = Mathf.Floor( ( boardWidth - slotPadding - ( slotSpacing * (slotColCount - 1) ) ) / slotColCount );   //슬롯 너비 계산
-
-            float boardHeight = (slotWidth * slotRowCount) + (slotSpacing * (slotRowCount - 1)) + slotPadding; // 보드 높이 계산
+            float slotSize = Mathf.Floor( ( boardWidth - slotPadding - ( slotSpacing * (slotColCount - 1) ) ) / slotColCount );   //슬롯 크기 계산
+            float slotTotalHeight = (slotSize * slotRowCount) + (slotSpacing * (slotRowCount - 1)) + slotPadding; // 슬롯 총 높이 계산
 
             //슬롯 크기 설정
-            if (boardHeight > rectTransform.rect.height)
+            if (slotTotalHeight > rectTransform.rect.height)    //만약 슬롯의 총 높이값이 보드판의 높이보다 크다면 슬롯 크기 재계산
             {
-                slotWidth = Mathf.Floor((boardWidth - slotPadding - scrollWidth - (slotSpacing * (slotColCount - 1))) / slotColCount);
+                slotSize = Mathf.Floor((rectTransform.rect.height - slotPadding  - (slotSpacing * (slotRowCount - 1))) / slotRowCount);
             }
-            gridLayout.cellSize = new Vector2(slotWidth, slotWidth);
+            gridLayout.cellSize = new Vector2(slotSize, slotSize);
         }
     }
 }
