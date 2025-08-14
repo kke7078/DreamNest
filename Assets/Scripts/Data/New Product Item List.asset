@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3299e3120170a1943b2f5394f0b8ae71, type: 3}
+  m_Name: New Product Item List
+  m_EditorClassIdentifier: 
+  category: 0
+  items:
+  - icon: {fileID: 0}
+    itemName: "1\uB819 \uC544\uC774\uD15C"
+    description: "\uAC15\uC544\uC9C0 1\uB819 \uC544\uC774\uD15C\uC774\uB2E4."
