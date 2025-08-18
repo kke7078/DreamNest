@@ -8,7 +8,7 @@ namespace mp
     [CreateAssetMenu(menuName = "Data/ProductItemDataBase")]
     public class ProductItemDataBase : ScriptableObject //프로덕트 아이템 데이터베이스 클래스
     {
-        public List<ProductItemList> allItemList = new List<ProductItemList>();
+        [SerializeField] private List<ProductItemList> allItemList = new List<ProductItemList>();
 
         public List<ProductItemData> GetItemsByCategory(ItemCategory category)
         {

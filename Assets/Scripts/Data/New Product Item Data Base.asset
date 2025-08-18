@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d170d70d0ea2e294e81e0258eef5c277, type: 3}
   m_Name: New Product Item Data Base
   m_EditorClassIdentifier: 
-  category: 0
+  allItemList:
+  - {fileID: 11400000, guid: 84fb8c65498933045be9061a70b58d3e, type: 2}
+  - {fileID: 11400000, guid: 2150e7b9b5c493741a43e50652308e8a, type: 2}
