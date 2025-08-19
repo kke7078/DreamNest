@@ -10,13 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3299e3120170a1943b2f5394f0b8ae71, type: 3}
-  m_Name: New Product Item List 1
+  m_Name: New Product Item List 2
   m_EditorClassIdentifier: 
-  category: 0
+  category: 1
   items:
   - icon: {fileID: 0}
-    itemName: "\uAC15\uC544\uC9C0 1\uB819 \uB808\uC5B4\uC544\uC774\uD15C"
-    description: "\uAC15\uC544\uC9C0 1\uB819 \uB808\uC5B4\uC544\uC774\uD15C\uC774\uB2E4."
-  - icon: {fileID: 0}
-    itemName: "\uAC15\uC544\uC9C0 2\uB819 \uB808\uC5B4\uC544\uC774\uD15C"
-    description: "\uAC15\uC544\uC9C0 2\uB819 \uB808\uC5B4\uC544\uC774\uD15C\uC774\uB2E4."
+    itemName: "\uACE0\uC591\uC774 1\uB819 \uC544\uC774\uD15C"
+    description: "\uACE0\uC591\uC774 1\uB819 \uC544\uC774\uD15C\uC774\uB2E4."

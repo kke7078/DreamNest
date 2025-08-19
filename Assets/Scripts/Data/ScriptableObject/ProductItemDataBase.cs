@@ -10,12 +10,12 @@ namespace mp
     {
         [SerializeField] private List<ProductItemList> allItemList = new List<ProductItemList>();
 
-        public List<ProductItemData> GetItemsByCategory(ItemCategory category)
-        {
-            ProductItemList list = allItemList.Find(itemList => itemList.Category == category);
-            if (list != null) return list.items;
+        //public List<ProductItemData> GetItemsByCategory(ItemCategory category)
+        //{
+        //    ProductItemList list = allItemList.Find(itemList => itemList.Category == category);
+        //    if (list != null) return list.items;
             
-            return new List<ProductItemData>();
-        }
+        //    return new List<ProductItemData>();
+        //}
     }
 }

@@ -15,8 +15,11 @@ MonoBehaviour:
   category: 0
   items:
   - icon: {fileID: 0}
-    itemName: "1\uB819 \uC544\uC774\uD15C"
+    itemName: "\uAC15\uC544\uC9C0 1\uB819 \uC544\uC774\uD15C"
     description: "\uAC15\uC544\uC9C0 1\uB819 \uC544\uC774\uD15C\uC774\uB2E4."
   - icon: {fileID: 0}
-    itemName: "2\uB819 \uC544\uC774\uD15C"
+    itemName: "\uAC15\uC544\uC9C0 2\uB819 \uC544\uC774\uD15C"
     description: "\uAC15\uC544\uC9C0 2\uB819 \uC544\uC774\uD15C\uC774\uB2E4."
+  - icon: {fileID: 0}
+    itemName: "\uAC15\uC544\uC9C0 3\uB819 \uC544\uC774\uD15C"
+    description: "\uAC15\uC544\uC9C0 3\uB819 \uC544\uC774\uD15C\uC774\uB2E4."
