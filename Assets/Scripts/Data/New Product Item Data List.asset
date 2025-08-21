@@ -12,21 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f07be23869e3e40b71e75c00e4f3a7, type: 3}
   m_Name: New Product Item Data List
   m_EditorClassIdentifier: 
-  itemCategory: 0
+  mainItemType: 0
+  singleItemType: 0
+  craftItemType: 0
+  currencyItemType: 0
+  itemGrade: 0
   productItemList:
-  - itemId: genplt001
-    itemName: 
+  - itemId: plt001
+    itemName: "1\uB819 plt \uC77C\uBC18 \uC544\uC774\uD15C"
     itemLevel: 1
-    itemDesc: 
+    itemDesc: "1\uB819 plt \uC77C\uBC18 \uC544\uC774\uD15C\uC784"
     itemIcon: {fileID: 0}
-    isMergeable: 0
     itemSellPrice: 0
     itemBuyPrice: 0
-  - itemId: genplt002
-    itemName: 
+  - itemId: plt002
+    itemName: "2\uB819 plt \uC77C\uBC18 \uC544\uC774\uD15C"
     itemLevel: 2
-    itemDesc: 
+    itemDesc: "2\uB819 plt \uC77C\uBC18 \uC544\uC774\uD15C\uC784"
     itemIcon: {fileID: 0}
-    isMergeable: 0
     itemSellPrice: 0
     itemBuyPrice: 0

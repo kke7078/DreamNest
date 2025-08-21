@@ -1,43 +1,60 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace mp
 {
-    public enum ItemCategory
-    {
-        //´ÜÀÏ Ä«Å×°í¸®
-        Plt,    //½Ä¹°°è
-        Glw,    //º°, ºû
-        Fab,    //Ãµ, ÀÎÇü, Á÷¹°
-        Gem,    //¼öÁ¤, º¸¼® °áÁ¤
-        Alc,    //¹°¾à, È¥ÇÕ¹°, ¿¬±İ
-        Sha,    //¾îµÒ, ±×¸²ÀÚ
-        Sky,    //±¸¸§, ³¯°³, ºñÇà
-        Aqa,    //¹°, ¾óÀ½
-        Fir,    //ºÒ
-        Mec,    //±â°è, ÅÂ¿±
-        Mbs,    //È¯»óÁ¾, Æê
+    public enum MainItemType
+    { 
+        Single,      //ë‹¨ì¼ ì•„ì´í…œ
+        Craft,       //í•©ì„± ì•„ì´í…œ
+        Currency,    //í™”í ì•„ì´í…œ
+    }
 
-        //ÇÕ¼º Ä«Å×°í¸®
+    public enum SingleItemType
+    {
+        Plt,    //ì‹ë¬¼ê³„
+        Glw,    //ë³„, ë¹›
+        Fab,    //ì²œ, ì¸í˜•, ì§ë¬¼
+        Gem,    //ìˆ˜ì •, ë³´ì„ ê²°ì •
+        Alc,    //ë¬¼ì•½, í˜¼í•©ë¬¼, ì—°ê¸ˆ
+        Sha,    //ì–´ë‘ , ê·¸ë¦¼ì
+        Sky,    //êµ¬ë¦„, ë‚ ê°œ, ë¹„í–‰
+        Aqa,    //ë¬¼, ì–¼ìŒ
+        Fir,    //ë¶ˆ
+        Mec,    //ê¸°ê³„, íƒœì—½
+        Mbs,    //í™˜ìƒì¢…, í«
+    }
+
+    public enum CraftItemType
+    { 
+        //ì¶”í›„ ì¶”ê°€ ì˜ˆì •
+        ex01,
+        ex02,
+    }
+
+    public enum CurrencyItemType
+    {
+        Energy,     //ì—ë„ˆì§€
+        Gold,       //ê³¨ë“œ
+        Gem,        //ë³´ì„
+        Ticket,     //í‹°ì¼“
     }
 
     public enum ItemGrade 
     {
-        Normal,    //ÀÏ¹İ
-        Rare,      //Èñ±Í
+        Normal,    //ì¼ë°˜
+        Rare,      //í¬ê·€
     }
-
 
     public interface IItemData
     {
-        string ItemId { get; }          //¾ÆÀÌµğ
-        string Itemname { get; }        //ÀÌ¸§
-        int ItemLevel { get; }          //·¹º§
-        string ItemDesc { get; }        //¼³¸í
-        Sprite ItemIcon { get; }        //¾ÆÀÌÄÜ
-        bool IsNotMergeable { get; }    //º´ÇÕ °¡´É ¿©ºÎ
-        int ItemSellPrice { get; }      //ÆÇ¸Å °¡°İ
-        int ItemBuyPrice { get; }       //±¸¸Å °¡°İ
+        string ItemId { get; }          //ì•„ì´ë””
+        string Itemname { get; }        //ì´ë¦„
+        int ItemLevel { get; }          //ë ˆë²¨
+        string ItemDesc { get; }        //ì„¤ëª…
+        Sprite ItemIcon { get; }        //ì•„ì´ì½˜
+        int ItemSellPrice { get; }      //íŒë§¤ ê°€ê²©
+        int ItemBuyPrice { get; }       //êµ¬ë§¤ ê°€ê²©
     }
 }
