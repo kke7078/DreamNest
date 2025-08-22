@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Product Item Data List 1
   m_EditorClassIdentifier: 
   mainItemType: 0
-  singleItemType: 0
+  singleItemType: 1
   craftItemType: 0
   currencyItemType: 0
   itemGrade: 1

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: New Generator Item Data List
   m_EditorClassIdentifier: 
   mainItemType: 0
-  singleItemType: 0
-  craftItemType: 0
+  singleItemType: 1
+  craftItemType: 2
   currencyItemType: 0
   maxLevel: 5
   generatorItemList:
