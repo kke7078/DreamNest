@@ -53,6 +53,7 @@ namespace mp
             }
         }
 
+        #region CreateSlot / UpdateCellSize : 슬롯 생성, 삭제, 업데이트 관련 메소드
         private void CreateSlot()
         {
             if (slotParent.childCount > 0)
@@ -83,5 +84,6 @@ namespace mp
             }
             gridLayout.cellSize = new Vector2(slotSize, slotSize);
         }
+        #endregion
     }
 }
