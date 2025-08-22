@@ -6,24 +6,9 @@ using UnityEditor;
 namespace mp
 {
     [System.Serializable]
-    public class ProductItemData : IItemData
+    public class ProductItemData : ItemCommonData
     {
-        [SerializeField] string itemId;               
-        [SerializeField] string itemName;          
-        [SerializeField] int itemLevel;            
-        [SerializeField, TextArea] string itemDesc;
-        [SerializeField] Sprite itemIcon;
-        [SerializeField] int itemSellPrice;
-        [SerializeField] int itemBuyPrice;
-
-        //공통부 속성
-        public string ItemId => itemId;
-        public string Itemname => itemName;
-        public int ItemLevel => itemLevel;
-        public string ItemDesc => itemDesc;
-        public Sprite ItemIcon => itemIcon;
-        public int ItemSellPrice => itemSellPrice;
-        public int ItemBuyPrice => itemBuyPrice;
+        
     }
 
     [CreateAssetMenu(menuName = "Data/ProductItemDataList")]
@@ -60,11 +45,19 @@ namespace mp
 
             //메인 카테고리 표시
             var mainItemTypeProp = serializedObject.FindProperty("mainItemType");
+
+            //EditorGUI.BeginChangeCheck, EditorGUI.EndChangeCheck : 두 함수 사이에 들어있는 GUI의 값이 바뀌었는지 체크
+            EditorGUI.BeginChangeCheck();   
             EditorGUILayout.PropertyField(mainItemTypeProp);
+            if (EditorGUI.EndChangeCheck())
+            {
+                // 모든 서브 타입을 None으로 초기화
+                serializedObject.FindProperty("singleItemType").enumValueIndex = (int)SingleItemType.None;
+                serializedObject.FindProperty("craftItemType").enumValueIndex = (int)CraftItemType.None;
+                serializedObject.FindProperty("currencyItemType").enumValueIndex = (int)CurrencyItemType.None;
+            }
 
-            MainItemType mainItemType = (MainItemType)mainItemTypeProp.enumValueIndex;
-
-            switch (mainItemType)
+            switch ((MainItemType)mainItemTypeProp.enumValueIndex)
             {
                 case MainItemType.Single:
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("singleItemType"));
