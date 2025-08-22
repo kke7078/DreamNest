@@ -6,17 +6,17 @@ using UnityEditor;
 namespace mp
 {
     [System.Serializable]
-    public class ProductItemData : IItemData
+    public class GeneratorItemData : IItemData
     {
-        [SerializeField] string itemId;               
-        [SerializeField] string itemName;          
-        [SerializeField] int itemLevel;            
+        //공통부 속성
+        [SerializeField] string itemId;
+        [SerializeField] string itemName;
+        [SerializeField] int itemLevel;
         [SerializeField, TextArea] string itemDesc;
         [SerializeField] Sprite itemIcon;
         [SerializeField] int itemSellPrice;
         [SerializeField] int itemBuyPrice;
 
-        //공통부 속성
         public string ItemId => itemId;
         public string Itemname => itemName;
         public int ItemLevel => itemLevel;
@@ -24,10 +24,19 @@ namespace mp
         public Sprite ItemIcon => itemIcon;
         public int ItemSellPrice => itemSellPrice;
         public int ItemBuyPrice => itemBuyPrice;
+
+        //생성기 속성
+        [SerializeField] private float cooldownTime; //재사용 대기 시간
+        [SerializeField] private int maxCreateCount; //최대 생성 개수
+        [SerializeField] private bool isDisposable;  //생성 후 파괴 여부
+
+        public float CooldownTime => cooldownTime;
+        public int MaxCreateCount => maxCreateCount;
+        public bool IsDisposable => isDisposable;
     }
 
-    [CreateAssetMenu(menuName = "Data/ProductItemDataList")]
-    public class ProductItemDataList : ScriptableObject
+    [CreateAssetMenu(menuName = "Data/GeneratorItemDataList")]
+    public class GeneratorItemDataList : ScriptableObject
     {
         //메인 카테고리
         [SerializeField] private MainItemType mainItemType;
@@ -38,21 +47,17 @@ namespace mp
         [SerializeField] private CraftItemType craftItemType;
         [SerializeField] private CurrencyItemType currencyItemType;
 
-        //등급
-        [SerializeField] private ItemGrade itemGrade;
-        public ItemGrade ItemGrade => itemGrade;
-
         //최대 레벨
         [SerializeField] private int maxLevel;
         public int MaxLevel => maxLevel;
 
-        [SerializeField] private List<ProductItemData> productItemList;
-        public List<ProductItemData> ProductItemList => productItemList;
+        [SerializeField] private List<GeneratorItemData> generatorItemList;
+        public List<GeneratorItemData> GeneratorItemList => generatorItemList;
     }
 
 #if UNITY_EDITOR
-    [CustomEditor(typeof(ProductItemDataList))]
-    public class ProductItemDataListEditor : Editor
+    [CustomEditor(typeof(GeneratorItemDataList))]
+    public class GeneratorItemDataListEditor : Editor
     {
         public override void OnInspectorGUI()
         {
@@ -78,9 +83,8 @@ namespace mp
             }
 
             //항상 표시되어야 하는 속성
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("itemGrade"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("maxLevel"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("productItemList"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("generatorItemList"));
 
             serializedObject.ApplyModifiedProperties();
         }
