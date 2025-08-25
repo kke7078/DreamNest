@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace mp
+namespace DreamNest
 {
     public class SlotManager : MonoBehaviour    //머지판 위에 어떤 아이템이 어디에 놓여있는 지 관리하는 클래스
     {

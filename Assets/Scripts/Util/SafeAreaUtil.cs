@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace mp
+namespace DreamNest
 {
     public class SafeAreaUtil : MonoBehaviour
     {

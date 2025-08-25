@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace mp
+namespace DreamNest
 {
     public class Slot : MonoBehaviour //각 슬롯의 현재 상태를 관리하는 클래스
     {

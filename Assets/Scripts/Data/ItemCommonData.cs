@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace mp
+namespace DreamNest
 {
     public enum MainItemType
     {

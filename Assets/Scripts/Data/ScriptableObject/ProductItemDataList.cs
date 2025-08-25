@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace mp
+namespace DreamNest
 {
     [System.Serializable]
     public class ProductItemData : ItemCommonData
