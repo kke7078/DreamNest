@@ -5,7 +5,7 @@ using UnityEngine;
 namespace DreamNest
 {
     //아이템에 공통으로 들어가는 속성, 기능 정리
-    public abstract class BaseItemData : IItemBase
+    public class BaseItemData : IItemBase
     {
         [SerializeField] private string itemID;                 //아이디
         [SerializeField] private int itemLevel;                 //레벨
