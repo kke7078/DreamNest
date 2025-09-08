@@ -1,27 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace DreamNest
 {
-    public enum ItemGrade
-    {
-        Normal,
-        Rare,
-    }
-
     [System.Serializable]
-    public class BlockItemData : BaseItemData   //일반블록 아이템에서만 사용되는 속성, 기능
+    public class BlockItemData : BaseItemData
     {
-        [SerializeField] private int itemBuyPrice;  //아이템 구매가격
+        //아이템 구매 가격
+        [SerializeField] private int itemBuyPrice;
         public int ItemBuyPrice => itemBuyPrice;
     }
 
-    [CreateAssetMenu(menuName ="Data/BlockItemData")]
+    [CreateAssetMenu(menuName = "Data/BlockItemList")]
     public class BlockItemList : ScriptableObject
     {
         [SerializeField] private MainItemType mainItemType;         //메인 아이템 타입
@@ -29,15 +21,13 @@ namespace DreamNest
         [SerializeField] private CraftItemType craftItemType;       //합성 아이템 타입
         [SerializeField] private CurrencyItemType currencyItemType; //화폐 아이템 타입
         [SerializeField] private ItemGrade itemGrade;               //아이템 등급
-
         private int maxLevel;   //아이템의 최대 레벨
-        
+
         public MainItemType MainItemType => mainItemType;
         public SingleItemType SingleItemType => singleItemType;
         public CraftItemType CraftItemType => craftItemType;
         public CurrencyItemType CurrencyItemType => currencyItemType;
         public ItemGrade ItemGrade => itemGrade;
-
         public int MaxLevel => maxLevel;
 
         [SerializeField] private List<BlockItemData> itemDataList; //일반블록 아이템 데이터 리스트
@@ -45,7 +35,7 @@ namespace DreamNest
 
         public void OnEnable()
         {
-            if(ItemDataList == null) itemDataList = new List<BlockItemData>();
+            if (ItemDataList == null) itemDataList = new List<BlockItemData>();
             maxLevel = ItemDataList.Count;
 
             SetItemInfo();    //아이디 설정
