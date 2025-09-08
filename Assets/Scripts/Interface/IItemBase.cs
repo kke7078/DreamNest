@@ -44,12 +44,6 @@ namespace DreamNest
         Ticket,     //티켓
     }
 
-    public enum ItemGrade 
-    {
-        Normal,
-        Rare
-    }
-
     public interface IItemBase  // 아이템에 공통으로 들어가는 속성 정리
     {
         string ItemID { get; set; }

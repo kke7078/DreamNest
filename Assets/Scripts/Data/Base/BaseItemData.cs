@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace DreamNest
 {
+    public enum ItemGrade
+    {
+        Normal,
+        Rare
+    }
+
     //아이템에 공통으로 들어가는 속성, 기능 정리
     public class BaseItemData : IItemBase
     {
