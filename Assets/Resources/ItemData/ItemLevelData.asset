@@ -14,52 +14,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelDataList:
   - level: 1
-    cooltime: 10
+    maxSpawnCount: 1
     CellPriceData:
       currency: 2
       price: 0
   - level: 2
-    cooltime: 12
+    maxSpawnCount: 2
     CellPriceData:
       currency: 2
       price: 0
   - level: 3
-    cooltime: 14
+    maxSpawnCount: 3
     CellPriceData:
       currency: 2
       price: 0
   - level: 4
-    cooltime: 16
+    maxSpawnCount: 4
     CellPriceData:
       currency: 2
       price: 0
   - level: 5
-    cooltime: 18
+    maxSpawnCount: 5
     CellPriceData:
       currency: 2
       price: 0
   - level: 6
-    cooltime: 20
+    maxSpawnCount: 6
     CellPriceData:
       currency: 2
       price: 0
   - level: 7
-    cooltime: 22
+    maxSpawnCount: 7
     CellPriceData:
       currency: 2
       price: 0
   - level: 8
-    cooltime: 24
+    maxSpawnCount: 8
     CellPriceData:
       currency: 2
       price: 0
   - level: 9
-    cooltime: 26
+    maxSpawnCount: 9
     CellPriceData:
       currency: 2
       price: 0
   - level: 10
-    cooltime: 28
+    maxSpawnCount: 10
     CellPriceData:
       currency: 2
       price: 0
