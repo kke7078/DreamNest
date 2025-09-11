@@ -8,7 +8,7 @@ namespace DreamNest
     { 
         public string ItemID { get; }
         public int ItemLevel { get; }
-        public string ItemName { get; }
-        public string ItemDesc { get; }
+        //public string ItemName { get; }
+        //public string ItemDesc { get; }
     }
 }
