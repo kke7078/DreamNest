@@ -5,6 +5,13 @@ using UnityEngine;
 
 namespace DreamNest
 {
+    public enum ItemCurrencyType
+    { 
+        Gold,
+        DIa,
+        Energy,
+    }
+
     [System.Serializable]
     public class ItemPrice
     {
@@ -19,12 +26,17 @@ namespace DreamNest
     public class BaseItemData : IItemBaseData
     {
         [SerializeField] private string itemID;
-        [SerializeField] private int itemLevel;
+        //[SerializeField] private int itemLevel;
         //[SerializeField] string itemName;
         //[SerializeField, TextArea] string itemDesc;
 
         public string ItemID { get; private set; }
-        public int ItemLevel { get; private set; }
+        //public int ItemLevel { get; private set; }
+
+        public void SetItemId(string id)
+        {
+            itemID = id;
+        }
         
 
 
