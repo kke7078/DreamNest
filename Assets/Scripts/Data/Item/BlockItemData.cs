@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace DreamNest
 {
-    
     [System.Serializable]
     public class BlockItemData : BaseItemData
     {
