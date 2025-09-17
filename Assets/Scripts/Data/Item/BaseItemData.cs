@@ -37,8 +37,6 @@ namespace DreamNest
         {
             itemID = id;
         }
-        
-
 
         //public string ItemName => throw new System.NotImplementedException();
 
