@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 namespace DreamNest
 {
@@ -92,7 +91,6 @@ namespace DreamNest
         SerializedProperty itemMainTypeProp;
         SerializedProperty itemBlockTypeProp;
         SerializedProperty itemGeneratorTypeProp;
-        SerializedProperty itemLists;
 
         void OnEnable()
         {
@@ -111,7 +109,7 @@ namespace DreamNest
             switch (mainType)
             {
                 case ItemMainType.Block:
-                
+
                     EditorGUILayout.PropertyField(itemBlockTypeProp);
                     break;
                 case ItemMainType.Generator:
