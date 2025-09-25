@@ -17,31 +17,5 @@ MonoBehaviour:
   itemGeneratorType: 0
   itemGrade: 0
   itemDataList:
-  - itemID: Plt101
-    itemSellPrice:
-      currencyType: 0
-      price: 0
-    itemBuyPrice:
-      currencyType: 0
-      price: 0
-  - itemID: Plt102
-    itemSellPrice:
-      currencyType: 0
-      price: 0
-    itemBuyPrice:
-      currencyType: 0
-      price: 0
-  - itemID: Plt103
-    itemSellPrice:
-      currencyType: 0
-      price: 0
-    itemBuyPrice:
-      currencyType: 0
-      price: 0
-  - itemID: Plt104
-    itemSellPrice:
-      currencyType: 0
-      price: 0
-    itemBuyPrice:
-      currencyType: 0
-      price: 0
+  - itemID: Pet101
+    itemLevel: 1

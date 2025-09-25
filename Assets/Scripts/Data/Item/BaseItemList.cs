@@ -13,36 +13,57 @@ namespace DreamNest
 
     public enum ItemBlockType     //일반블럭에서 사용되는 카테고리
     {
-        Plt,    //식물계
-        Glw,    //별, 빛
-        Fab,    //천, 인형, 직물
-        Gem,    //수정, 보석 결정
-        Alc,    //물약, 혼합물, 연금
-        Sha,    //어둠, 그림자
-        Sky,    //구름, 날개, 비행
-        Aqa,    //물, 얼음
-        Fir,    //불
-        Mec,    //기계, 태엽
-        Mbs,    //환상종, 펫
+        Pet,        //환상종, 펫
         Energy,     //에너지
         Gold,       //골드
         Dia,        //보석
+        Plt,        //식물계
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //Glw,    //별, 빛
+        //Fab,    //천, 인형, 직물
+        //Gem,    //수정, 보석 결정
+        //Alc,    //물약, 혼합물, 연금
+        //Sha,    //어둠, 그림자
+        //Sky,    //구름, 날개, 비행
+        //Aqa,    //물, 얼음
+        //Fir,    //불
+        //Mec,    //기계, 태엽
+        
     }
 
     public enum ItemGeneratorType    //생성기에서 사용되는 카테고리
     {
+        //일반 생성기
+        Pet,    //환상종, 펫 → 일반블록 생성 (추가 설명 없는 생성기는 이하 동문)
+        Dco,    //데코 → 레어생성기 조각 생성
+
+        //레어 생성기
         Plt,    //식물계
-        Glw,    //별, 빛
-        Fab,    //천, 인형, 직물
-        Gem,    //수정, 보석 결정
-        Alc,    //물약, 혼합물, 연금
-        Sha,    //어둠, 그림자
-        Sky,    //구름, 날개, 비행
-        Aqa,    //물, 얼음
-        Fir,    //불
-        Mec,    //기계, 태엽
-        Mbs,    //환상종, 펫
-        Prm,    //프리미엄 (재화)
+        Prm,    //프리미엄(재화) → 재화 생성
+
+
+
+        //Glw,    //별, 빛
+        //Fab,    //천, 인형, 직물
+        //Gem,    //수정, 보석 결정
+        //Alc,    //물약, 혼합물, 연금
+        //Sha,    //어둠, 그림자
+        //Sky,    //구름, 날개, 비행
+        //Aqa,    //물, 얼음
+        //Fir,    //불
+        //Mec,    //기계, 태엽
     }
 
     public enum ItemGrade       //아이템 등급
@@ -64,7 +85,7 @@ namespace DreamNest
         public ItemGrade ItemGrade => itemGrade;
 
         //리스트에 들어있는 아이템에 정보 입력
-        public void SetItemInfo<T>(List<T> itemList) where T : BaseItemData
+        public virtual void SetItemInfo<T>(List<T> itemList) where T : BaseItemData
         {
             string id = "";
             for (int i = 0; i < itemList.Count; i++)
@@ -81,6 +102,7 @@ namespace DreamNest
                 }
                 
                 itemList[i].SetItemId(id);
+                itemList[i].SetItemLevel(indexValue);
             }
         }
     }

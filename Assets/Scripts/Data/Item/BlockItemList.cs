@@ -13,7 +13,7 @@ namespace DreamNest
         //리스트 아이템 정보 입력
         public void OnEnable()
         {
-            if(itemDataList == null) itemDataList = new List<BlockItemData>();
+            if(ItemDataList == null) itemDataList = new List<BlockItemData>();
             SetItemInfo(itemDataList);
         }
     }

@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,11 +10,39 @@ namespace DreamNest
         [SerializeField] private List<GeneratorItemData> itemDataList;
         public List<GeneratorItemData> ItemDataList => itemDataList;
 
-        //∏ÆΩ∫∆Æ æ∆¿Ã≈€ ¡§∫∏ ¿‘∑¬
+        //Î¶¨Ïä§Ìä∏ ÏïÑÏù¥ÌÖú Ï†ïÎ≥¥ ÏûÖÎ†•
         public void OnEnable()
         {
-            if (itemDataList == null) itemDataList = new List<GeneratorItemData>();
+            if(ItemDataList == null) itemDataList = new List<GeneratorItemData>();
             SetItemInfo(itemDataList);
+        }
+
+        
+
+        public override void SetItemInfo<T>(List<T> itemList)
+        {
+            base.SetItemInfo(itemList);
+
+            switch (ItemGrade)
+            {
+                case ItemGrade.Normal:
+                    SetMaxGenerationCount(2, itemList); break;
+                case ItemGrade.Rare:
+                    SetMaxGenerationCount(1.5f, itemList); break;
+            }
+        }
+
+        private void SetMaxGenerationCount<T>(float multiple, List<T> itemList)
+        {
+            foreach (var item in itemList)
+            {
+                GeneratorItemData generatorItem = item as GeneratorItemData;
+
+                if (generatorItem != null)
+                {
+                    generatorItem.MaxGenerationCount = Mathf.Floor(generatorItem.ItemLevel * multiple);
+                }
+            }
         }
     }
 }

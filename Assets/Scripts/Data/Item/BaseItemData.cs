@@ -1,3 +1,4 @@
+Ôªøusing JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -22,20 +23,26 @@ namespace DreamNest
         public int Price => price;
     }
 
-
     public class BaseItemData : IItemBaseData
     {
         [SerializeField] private string itemID;
-        //[SerializeField] private int itemLevel;
+        [SerializeField] private int itemLevel;
         //[SerializeField] string itemName;
         //[SerializeField, TextArea] string itemDesc;
 
         public string ItemID { get; private set; }
-        //public int ItemLevel { get; private set; }
+        public int ItemLevel { get; private set; }
 
         public void SetItemId(string id)
         {
-            itemID = id;
+            itemID = id;        //ÌïÑÎìúÏóê Í∞í ÎÑ£Í∏∞
+            ItemID = itemID;    //ÌîÑÎ°úÌçºÌã∞Ïóê ÎèôÍ∏∞Ìôî
+        }
+
+        public void SetItemLevel(int level)
+        {
+            itemLevel = level;
+            ItemLevel = itemLevel;
         }
 
         //public string ItemName => throw new System.NotImplementedException();
@@ -50,21 +57,21 @@ namespace DreamNest
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            // ∂Û∫ß ±◊∏Æ±‚
+            // ÎùºÎ≤® Í∑∏Î¶¨Í∏∞
             EditorGUI.BeginProperty(position, label, property);
 
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 
-            // Rect ≥™¥©±‚
+            // Rect ÎÇòÎàÑÍ∏∞
             float width = position.width;
             var currencyRect = new Rect(position.x, position.y, width * 0.4f, position.height);
             var priceRect = new Rect(position.x + width * 0.42f, position.y, width * 0.58f, position.height);
 
-            // « µÂ √£±‚
+            // ÌïÑÎìú Ï∞æÍ∏∞
             var currencyProp = property.FindPropertyRelative("currencyType");
             var priceProp = property.FindPropertyRelative("price");
 
-            // ±◊∏Æ±‚
+            // Í∑∏Î¶¨Í∏∞
             EditorGUI.PropertyField(currencyRect, currencyProp, GUIContent.none);
             EditorGUI.PropertyField(priceRect, priceProp, GUIContent.none);
 
