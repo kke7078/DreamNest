@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -6,85 +6,45 @@ using UnityEngine.EventSystems;
 
 namespace DreamNest
 {
-    public class PrefabBase : MonoBehaviour, IItemBaseData, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class PrefabBase : MonoBehaviour, IItemBaseData, IPointerClickHandler
+        /*, IBeginDragHandler, IDragHandler, IEndDragHandler*/
     {
-        [SerializeField] BlockItemDatabase blockItemDatabase;
-        [SerializeField] ItemMainType mainType;
-        [SerializeField] ItemBlockType blockType;
-        [SerializeField] ItemGeneratorType generatorType;
-        [SerializeField] private string itemId;
-
         private float lastClickTime = 0f;
-        private const float doubleClickCheckTime = 0.25f;   //0.25√  ¿Ã≥ª∏È ¥ı∫Ì ≈¨∏Ø
+        private const float doubleClickCheckTime = 0.25f;   //0.25Ï¥à Ïù¥ÎÇ¥Î©¥ ÎçîÎ∏î ÌÅ¥Î¶≠
 
-        public BlockItemDatabase BlockItemDatabase => blockItemDatabase;
+        [SerializeField] private string itemId;
+        [SerializeField] private int itemLevel;
 
         public string ItemID => itemId;
+        public int ItemLevel => itemLevel;
 
         public void OnPointerClick(PointerEventData eventData)
         {
             float clickTime = Time.time - lastClickTime;
 
-            //¥ı∫Ì≈¨∏Ø
+            //ÎçîÎ∏îÌÅ¥Î¶≠
             if (clickTime <= doubleClickCheckTime)
             {
-                Debug.Log("¥ı∫Ì≈¨∏Ø");
+                CancelInvoke(nameof(OnSingleClick));  //Ïã±Í∏ÄÌÅ¥Î¶≠ ÏßÄÏó∞Ïù¥Î≤§Ìä∏ Ï∑®ÏÜå
+
                 OnDoubleClick();
                 lastClickTime = 0f;
             }
-            else //ΩÃ±€ ≈¨∏Ø
+            else //Ïã±Í∏Ä ÌÅ¥Î¶≠
             {
                 lastClickTime = Time.time;
-                Invoke("OnSingleClick", doubleClickCheckTime);
+                Invoke(nameof(OnSingleClick), doubleClickCheckTime);
             }
         }
 
-        protected virtual void OnDoubleClick() { }
-        protected virtual void OnSingleClick() { }
-    }
-
-#if UNITY_EDITOR
-    [CustomEditor(typeof(PrefabBase), true)]
-    public class PrefabBaseEditor : Editor
-    {
-        SerializedProperty itemMainTypeProp;
-        SerializedProperty itemBlockTypeProp;
-        SerializedProperty itemGeneratorTypeProp;
-
-        void OnEnable()
+        protected virtual void OnSingleClick()
         {
-            itemMainTypeProp = serializedObject.FindProperty("mainType");
-            itemBlockTypeProp = serializedObject.FindProperty("blockType");
-            itemGeneratorTypeProp = serializedObject.FindProperty("generatorType");
+            Debug.Log("Ïã±Í∏ÄÌÅ¥Î¶≠");
         }
 
-        public override void OnInspectorGUI()
+        protected virtual void OnDoubleClick() 
         {
-            serializedObject.Update();
-
-            EditorGUILayout.PropertyField(itemMainTypeProp);
-
-            ItemMainType mainType = (ItemMainType)itemMainTypeProp.enumValueIndex;
-            switch (mainType)
-            {
-                case ItemMainType.Block:
-
-                    EditorGUILayout.PropertyField(itemBlockTypeProp);
-                    break;
-                case ItemMainType.Generator:
-                    EditorGUILayout.PropertyField(itemGeneratorTypeProp);
-                    break;
-            }
-
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("generatorItemDatabase"));
-            DrawInspectorBase();
-            serializedObject.ApplyModifiedProperties();
-        }
-
-        public virtual void DrawInspectorBase() {
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("blockItemDatabase"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("itemId"));
+            Debug.Log("ÎçîÎ∏îÌÅ¥Î¶≠");
         }
     }
-#endif
 }
