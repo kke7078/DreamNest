@@ -108,13 +108,13 @@ namespace DreamNest
     }
 
     [CustomEditor(typeof(BaseItemList), true)]
-    public class BaseITemListEditor : Editor
+    public class BaseItemListEditor : Editor
     {
         SerializedProperty itemMainTypeProp;
         SerializedProperty itemBlockTypeProp;
         SerializedProperty itemGeneratorTypeProp;
 
-        void OnEnable()
+        protected virtual void OnEnable()
         {
             itemMainTypeProp = serializedObject.FindProperty("itemMainType");
             itemBlockTypeProp = serializedObject.FindProperty("itemBlockType");

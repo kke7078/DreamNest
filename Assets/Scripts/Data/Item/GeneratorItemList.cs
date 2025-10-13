@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace DreamNest
@@ -7,17 +8,18 @@ namespace DreamNest
     [CreateAssetMenu(menuName = "Data/GeneratorItemList")]
     public class GeneratorItemList : BaseItemList
     {
+        [SerializeField] private List<BlockItemList> spawnItemList;
+
         [SerializeField] private List<GeneratorItemData> itemDataList;
         public List<GeneratorItemData> ItemDataList => itemDataList;
 
         //리스트 아이템 정보 입력
         public void OnEnable()
         {
-            if(ItemDataList == null) itemDataList = new List<GeneratorItemData>();
+            if (ItemDataList == null) itemDataList = new List<GeneratorItemData>();
             SetItemInfo(itemDataList);
         }
 
-        
 
         public override void SetItemInfo<T>(List<T> itemList)
         {
@@ -42,6 +44,30 @@ namespace DreamNest
                 {
                     generatorItem.MaxGenerationCount = Mathf.Floor(generatorItem.ItemLevel * multiple);
                 }
+            }
+        }
+
+        public void InitializeSpawnList()
+        {
+            Debug.Log(GameManager.Instance.BlockItemDB.BlockItemList.Count);
+        }
+
+        [CustomEditor(typeof(GeneratorItemList))]
+        public class GeneratorItemListEditor : BaseItemListEditor 
+        {
+            SerializedProperty spawnItemList;
+
+            protected override void OnEnable()
+            {
+                spawnItemList = serializedObject.FindProperty("spawnItemList");
+                base.OnEnable();
+            }
+
+            public override void OnInspectorGUI()
+            {
+                EditorGUILayout.PropertyField(spawnItemList);
+                serializedObject.ApplyModifiedProperties();
+                base.OnInspectorGUI();
             }
         }
     }
