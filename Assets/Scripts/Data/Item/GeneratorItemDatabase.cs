@@ -22,7 +22,7 @@ namespace DreamNest
         }
 
         [SerializeField] private List<GeneratorItemList> generatorItemList;
-        public List<GeneratorItemList> GeneratorItemLists => generatorItemList;
+        public List<GeneratorItemList> GeneratorItemList => generatorItemList;
 
         private Dictionary<string, BaseItemData> itemDict;
 

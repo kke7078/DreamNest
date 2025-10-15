@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3f3520835f54e4f8445f9e22442b5e, type: 3}
+  m_Name: Pet Generator Item List
+  m_EditorClassIdentifier: 
+  itemMainType: 1
+  itemBlockType: 0
+  itemGeneratorType: 0
+  itemGrade: 0
+  spawnItemList:
+  - {fileID: 11400000, guid: d586912625709c7408ba4fc45c72b980, type: 2}
+  itemDataList:
+  - itemID: Pet001
+    itemLevel: 1
+    maxGenerationCount: 2
+  - itemID: Pet002
+    itemLevel: 2
+    maxGenerationCount: 4
+  - itemID: Pet003
+    itemLevel: 3
+    maxGenerationCount: 6
+  - itemID: Pet004
+    itemLevel: 4
+    maxGenerationCount: 8
+  - itemID: Pet005
+    itemLevel: 5
+    maxGenerationCount: 10
+  - itemID: Pet006
+    itemLevel: 6
+    maxGenerationCount: 12

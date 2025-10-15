@@ -12,11 +12,8 @@ namespace DreamNest
         private float lastClickTime = 0f;
         private const float doubleClickCheckTime = 0.25f;   //0.25초 이내면 더블 클릭
 
-        [SerializeField] private string itemId;
-        [SerializeField] private int itemLevel;
-
-        public string ItemID => itemId;
-        public int ItemLevel => itemLevel;
+        [field: SerializeField] public string ItemID { get; private set; }
+        [field: SerializeField] public int ItemLevel { get; private set; }
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -45,6 +42,12 @@ namespace DreamNest
         protected virtual void OnDoubleClick() 
         {
             Debug.Log("더블클릭");
+        }
+
+        public void SetItemInfo(string id, int level)
+        {
+            ItemID = id;
+            ItemLevel = level;
         }
     }
 }

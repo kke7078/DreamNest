@@ -11,9 +11,11 @@ namespace DreamNest
     public class BlockItemDatabase : ScriptableObject
     {
         [SerializeField] private List<BlockItemList> blockItemList;
-        public List<BlockItemList> BlockItemList => blockItemList;
+        [SerializeField] private Dictionary<string, BaseItemData> itemDict;
 
-        private Dictionary<string, BaseItemData> itemDict;
+        public List<BlockItemList> BlockItemList => blockItemList;
+        public Dictionary<string, BaseItemData> ItemDict => itemDict;
+        
 
         public void BuildDictionary()
         {
@@ -43,24 +45,6 @@ namespace DreamNest
             itemDict.TryGetValue(id, out var item);
 
             return item;
-        }
-
-        public BlockItemData GetRandomItem(GeneratorData generator)
-        {
-            
-
-            return null;
-        }
-
-        //임시 가중치 함수
-        private int GetWeight(ItemGrade grade)
-        {
-            switch (grade)
-            {
-                case ItemGrade.Normal: return 100;
-                case ItemGrade.Rare: return 50;
-                default: return 0;
-            }
         }
     }
 }

@@ -14,6 +14,7 @@ namespace DreamNest
     public enum ItemBlockType     //일반블럭에서 사용되는 카테고리
     {
         Pet,        //환상종, 펫
+        Dco,        //데코
         Energy,     //에너지
         Gold,       //골드
         Dia,        //보석

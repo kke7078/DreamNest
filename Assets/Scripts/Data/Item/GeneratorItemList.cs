@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,9 +9,10 @@ namespace DreamNest
     [CreateAssetMenu(menuName = "Data/GeneratorItemList")]
     public class GeneratorItemList : BaseItemList
     {
-        [SerializeField] private List<BlockItemList> spawnItemList;
-
+        [SerializeField] private List<BaseItemList> spawnItemList;
         [SerializeField] private List<GeneratorItemData> itemDataList;
+
+        public List<BaseItemList> SpawnItemLIst => spawnItemList;
         public List<GeneratorItemData> ItemDataList => itemDataList;
 
         //리스트 아이템 정보 입력
@@ -49,7 +51,38 @@ namespace DreamNest
 
         public void InitializeSpawnList()
         {
-            Debug.Log(GameManager.Instance.BlockItemDB.BlockItemList.Count);
+            BlockItemDatabase blockDB = GameManager.Instance.BlockItemDB;
+            GeneratorItemDatabase generatorDB = GameManager.Instance.GeneratorItemDB;
+            if (blockDB == null || generatorDB == null) return;
+
+            if (spawnItemList == null) spawnItemList = new List<BaseItemList>();
+            spawnItemList.Clear();
+
+            //생성기의 카테고리가 Pet일 때, Pet 블록 아이템, DCO 생성기 블록 드롭가능
+            if (ItemGeneratorType == ItemGeneratorType.Pet)
+            {
+                foreach (GeneratorItemList list in generatorDB.GeneratorItemList)
+                {
+                    if (list.ItemGeneratorType == ItemGeneratorType.Dco)
+                    {
+                        if (!spawnItemList.Contains(list)) spawnItemList.Add(list);
+                    }
+                }
+            }
+            //생성기의 카테고리가 Dco일 때, 전카테고리 중 랜덤 1렙 생성기 드롭
+            else if (ItemGeneratorType == ItemGeneratorType.Dco)
+            { 
+                
+            }
+
+            //생성기 카테고리 == 블록 카테고리인 리스트 분류
+            foreach (BlockItemList list in blockDB.BlockItemList)
+            {
+                if (ItemGeneratorType.ToString() == list.ItemBlockType.ToString())
+                {
+                    if (!spawnItemList.Contains(list)) spawnItemList.Add(list);
+                }
+            }
         }
 
         [CustomEditor(typeof(GeneratorItemList))]

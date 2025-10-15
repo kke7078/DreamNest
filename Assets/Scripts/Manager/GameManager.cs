@@ -13,7 +13,7 @@ namespace DreamNest
         [SerializeField] private GeneratorItemDatabase generatorItemDB;
 
         public BlockItemDatabase BlockItemDB => blockItemDB;
-
+        public GeneratorItemDatabase GeneratorItemDB => generatorItemDB;
 
         private void Awake()
         {
@@ -29,7 +29,7 @@ namespace DreamNest
         {
             blockItemDB.BuildDictionary();
 
-            foreach (var generatorItemList in generatorItemDB.GeneratorItemLists)
+            foreach (var generatorItemList in generatorItemDB.GeneratorItemList)
             {
                 generatorItemList.InitializeSpawnList();
             }
