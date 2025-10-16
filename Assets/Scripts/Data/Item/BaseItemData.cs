@@ -1,6 +1,8 @@
 ﻿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -48,6 +50,43 @@ namespace DreamNest
         //public string ItemName => throw new System.NotImplementedException();
 
         //public string ItemDesc => throw new System.NotImplementedException();
+
+        //아이템 정보 세팅 → 아이디값 각 DB에 넘겨서 Dictionary 세팅
+        public string SetItemInfo(BaseItemList list, BaseItemData data, int index)
+        {
+            string id = "";
+
+            if (list is BlockItemList blockList)
+            {
+                id = $"{list.ItemBlockType}{(100 * blockList.ListCount + index):D3}";
+
+                if (GameManager.Instance.BlockItemDB.GetItemById(id) == null)
+                {
+                    SetItemId(id);
+                    SetItemLevel(index);
+
+                    return id;
+                }
+                else
+                {
+                    blockList.SetListCount(blockList.ListCount + 1);
+                    SetItemInfo(list, data, index); //다시 돌리기
+                }
+            }
+            else if (list is GeneratorItemList generatorLIst)
+            {
+                id = $"{list.ItemGeneratorType}{index:D3}";
+
+                SetItemId(id);
+                SetItemLevel(index);
+
+                if(data is GeneratorItemData generatorData) generatorLIst.SetMaxGenerationCount(generatorData);
+
+                return id;
+            }
+
+            return "";
+        }
     }
 
 

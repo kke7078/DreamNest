@@ -16,6 +16,7 @@ namespace DreamNest
             get { return maxGenerationCount; }
             set { maxGenerationCount = value; }
         }
+
         //public ItemPrice ItemBuyPrice => itemBuyPrice;
     }
 }

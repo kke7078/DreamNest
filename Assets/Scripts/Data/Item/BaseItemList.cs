@@ -14,7 +14,6 @@ namespace DreamNest
     public enum ItemBlockType     //일반블럭에서 사용되는 카테고리
     {
         Pet,        //환상종, 펫
-        Dco,        //데코
         Energy,     //에너지
         Gold,       //골드
         Dia,        //보석
@@ -78,34 +77,11 @@ namespace DreamNest
         [SerializeField] private ItemMainType itemMainType;
         [SerializeField] private ItemBlockType itemBlockType;
         [SerializeField] private ItemGeneratorType itemGeneratorType;
-        [SerializeField] private ItemGrade itemGrade;
+        
 
         public ItemMainType ItemMainType => itemMainType;
         public ItemBlockType ItemBlockType => itemBlockType;
         public ItemGeneratorType ItemGeneratorType => itemGeneratorType;
-        public ItemGrade ItemGrade => itemGrade;
-
-        //리스트에 들어있는 아이템에 정보 입력
-        public virtual void SetItemInfo<T>(List<T> itemList) where T : BaseItemData
-        {
-            string id = "";
-            for (int i = 0; i < itemList.Count; i++)
-            {
-                int indexValue = i + 1;
-
-                if (itemList[i] is GeneratorItemData) id = $"{ItemGeneratorType}{indexValue:D3}";
-                else
-                {
-                    int gradeValue = (int)ItemGrade + 1;
-                    int totalValue = gradeValue * 100 + indexValue;
-
-                    id = $"{ItemBlockType}{totalValue:D3}";
-                }
-                
-                itemList[i].SetItemId(id);
-                itemList[i].SetItemLevel(indexValue);
-            }
-        }
     }
 
     [CustomEditor(typeof(BaseItemList), true)]
@@ -140,7 +116,6 @@ namespace DreamNest
                     break;
             }
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("itemGrade"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("itemDataList"));
             serializedObject.ApplyModifiedProperties();
         }

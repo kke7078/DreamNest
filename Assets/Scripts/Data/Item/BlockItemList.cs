@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace DreamNest
@@ -7,14 +8,29 @@ namespace DreamNest
     [CreateAssetMenu(menuName = "Data/BlockItemList")]
     public class BlockItemList : BaseItemList
     {
+        [SerializeField] private int listCount = 1;
         [SerializeField] private List<BlockItemData> itemDataList;
         public List<BlockItemData> ItemDataList => itemDataList;
+        public int ListCount => listCount;
 
-        //리스트 아이템 정보 입력
-        public void OnEnable()
+        public void SetListCount(int value)
         {
-            if(ItemDataList == null) itemDataList = new List<BlockItemData>();
-            SetItemInfo(itemDataList);
+            listCount = value;
+        }
+        
+    }
+
+    [CustomEditor(typeof(BlockItemList))]
+
+    public class BlockItemListEditor : BaseItemListEditor
+    {
+        public override void OnInspectorGUI()
+        {
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("listCount"));
+
+            base.OnInspectorGUI();
+
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }

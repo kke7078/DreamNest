@@ -11,35 +11,36 @@ namespace DreamNest
     public class BlockItemDatabase : ScriptableObject
     {
         [SerializeField] private List<BlockItemList> blockItemList;
-        [SerializeField] private Dictionary<string, BaseItemData> itemDict;
+        [SerializeField] private Dictionary<string, BlockItemData> itemDict;
 
         public List<BlockItemList> BlockItemList => blockItemList;
-        public Dictionary<string, BaseItemData> ItemDict => itemDict;
+        public Dictionary<string, BlockItemData> ItemDict => itemDict;
         
 
         public void BuildDictionary()
         {
             if (itemDict != null) return;
             
-            itemDict = new Dictionary<string, BaseItemData>();
+            itemDict = new Dictionary<string, BlockItemData>();
 
             foreach (var list in blockItemList) //블록아이템들의 리스트 순회
             {
+                int index = 0;
+
                 foreach (var item in list.ItemDataList)
                 {
-                    BaseItemData baseData = item as BaseItemData;
-                    if (baseData != null)
+                    index++;
+                    string id = item.SetItemInfo(list, item, index);
+
+                    if (!itemDict.ContainsKey(id))
                     {
-                        if (!itemDict.ContainsKey(baseData.ItemID))
-                        {
-                            itemDict.Add(baseData.ItemID, baseData);
-                        }
+                        itemDict.Add(id, item);
                     }
                 }
             }
         }
 
-        public BaseItemData GetItemById(string id)
+        public BlockItemData GetItemById(string id)
         {
             if (itemDict == null) BuildDictionary();
             itemDict.TryGetValue(id, out var item);

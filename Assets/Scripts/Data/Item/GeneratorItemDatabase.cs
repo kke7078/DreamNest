@@ -7,53 +7,38 @@ namespace DreamNest
     [CreateAssetMenu(menuName = "Data/GeneratorItemDB")]
     public class GeneratorItemDatabase : ScriptableObject
     {
-        private static GeneratorItemDatabase instance;
-        public static GeneratorItemDatabase Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = Resources.Load<GeneratorItemDatabase>("GeneratorItemDB");
-                }
-
-                return instance;
-            }
-        }
-
         [SerializeField] private List<GeneratorItemList> generatorItemList;
         public List<GeneratorItemList> GeneratorItemList => generatorItemList;
 
-        private Dictionary<string, BaseItemData> itemDict;
+        private Dictionary<string, GeneratorItemData> itemDict;
 
         public void BuildDictionary()
         {
             if (itemDict != null) return;
 
-            itemDict = new Dictionary<string, BaseItemData>();
+            itemDict = new Dictionary<string, GeneratorItemData>();
 
             foreach (var list in generatorItemList) //생성기 아이템들의 리스트 순회
             {
+                int index = 0;
+
                 foreach (var item in list.ItemDataList)
                 {
-                    BaseItemData baseData = item as BaseItemData;
-                    if (baseData != null)
+                    index++;
+                    string id = item.SetItemInfo(list, item, index);
+
+                    if (!itemDict.ContainsKey(id))
                     {
-                        if (!itemDict.ContainsKey(baseData.ItemID))
-                        {
-                            itemDict.Add(baseData.ItemID, baseData);
-                        }
+                        itemDict.Add(id, item);
                     }
                 }
             }
         }
 
-        public BaseItemData GetItemById(string id)
+        public GeneratorItemData GetItemById(string id)
         {
             if (itemDict == null) BuildDictionary();
             itemDict.TryGetValue(id, out var item);
-
-            Debug.Log(item);
 
             return item;
         }
