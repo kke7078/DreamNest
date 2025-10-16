@@ -80,7 +80,7 @@ namespace DreamNest
                 SetItemId(id);
                 SetItemLevel(index);
 
-                if(data is GeneratorItemData generatorData) generatorLIst.SetMaxGenerationCount(generatorData);
+                generatorLIst.SetMaxGenerationCount();
 
                 return id;
             }

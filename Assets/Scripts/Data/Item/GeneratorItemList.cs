@@ -16,14 +16,17 @@ namespace DreamNest
         public ItemGrade ItemGrade => itemGrade;
         public List<GeneratorItemData> ItemDataList => itemDataList;
 
-        public void SetMaxGenerationCount(GeneratorItemData data)
+        public void SetMaxGenerationCount()
         {
-            switch (ItemGrade)
+            foreach (var item in itemDataList)
             {
-                case ItemGrade.Normal:
-                    GetMaxGenerationCount(2, data); break;
-                case ItemGrade.Rare:
-                    GetMaxGenerationCount(1.5f, data); break;
+                switch (ItemGrade)
+                {
+                    case ItemGrade.Normal:
+                        GetMaxGenerationCount(2, item); break;
+                    case ItemGrade.Rare:
+                        GetMaxGenerationCount(1.5f, item); break;
+                }
             }
         }
 

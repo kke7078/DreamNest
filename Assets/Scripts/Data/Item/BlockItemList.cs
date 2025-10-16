@@ -17,7 +17,6 @@ namespace DreamNest
         {
             listCount = value;
         }
-        
     }
 
     [CustomEditor(typeof(BlockItemList))]
