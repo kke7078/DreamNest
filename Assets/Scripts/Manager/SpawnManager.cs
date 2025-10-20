@@ -1,9 +1,13 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
 
 namespace DreamNest
 {
@@ -14,7 +18,7 @@ namespace DreamNest
         [SerializeField] private SpawnRateTable spawnRateNormal;
         [SerializeField] private SpawnRateTable spawnRateRare;
         [SerializeField] private PrefabGenerator prefabGenerator;
-        //[SerializeField] private PrefabBlock prefabBlock;
+        [SerializeField] private PrefabBlock prefabBlock;
 
         public SpawnRateTable SpawnRateNormal => spawnRateNormal;
         public SpawnRateTable SpawnRateRare => spawnRateRare;
@@ -38,7 +42,8 @@ namespace DreamNest
             foreach (var entry in SpawnRateRare.SpawnRate) rareRate.Add(entry.Level, entry.Weight);
         }
 
-        public bool TrySpawnItem(GeneratorData generator, int currentItemLevel)
+        //ÏÉùÏÑ± Í∞ÄÎä• Ï°∞Í±¥ ÌïÑÌÑ∞ÎßÅ
+        public bool TrySpawnItem(PrefabGenerator generator, int currentItemLevel)
         {
             int minSpawnLevel = 0;
 
@@ -48,76 +53,89 @@ namespace DreamNest
                 case ItemGrade.Rare: minSpawnLevel = spawnRateRare.MinSpawnLevel; break;
             }
 
-            //ª˝º∫±‚¿« «ˆ¿Á ∑π∫ß¿Ã √÷º“ ª˝º∫ ∞°¥… ∑π∫ß∫∏¥Ÿ ≥∑¥Ÿ∏È false π›»Ø
+            //ÏÉùÏÑ±Í∏∞Ïùò ÌòÑÏû¨ Î†àÎ≤®Ïù¥ ÏµúÏÜå ÏÉùÏÑ± Í∞ÄÎä• Î†àÎ≤®Î≥¥Îã§ ÎÇÆÎã§Î©¥ false Î∞òÌôò
             if (minSpawnLevel > currentItemLevel) return false;
 
-            //æ∆¿Ã≈€ ª˝º∫
-            SpawnRandomItem(generator, currentItemLevel);
+            //ÏïÑÏù¥ÌÖú Î¶¨Ïä§Ìä∏ ÎΩëÍ∏∞
+            string id = SpawnRandomItem(generator, currentItemLevel);
+            Debug.Log(id);
 
             return true;
         }
 
-        private void SpawnRandomItem(GeneratorData generatorData, int currentItemLevel)
+        private string SpawnRandomItem(PrefabGenerator generator, int currentItemLevel)
         {
-            //ª˝º∫±‚¿« ƒ´≈◊∞Ì∏Æ∞° Pet¿œ Ω√, 98:2 ∫Ò¿≤∑Œ DCO ª˝º∫±‚ ∫Ì∑œ µÂ∑”∞°¥…«ÿæﬂ «‘
-            if (generatorData.GeneratorType == ItemGeneratorType.Pet)
+            if (generator != null)
             {
-                int rand = Random.Range(0, 100);
-                Debug.Log($"rand : {rand}");
+                float rand = Random.Range(0f, 1f);
+                float currentWeight = 0f;
 
-                //Dco ª˝º∫±‚ ∫Ì∑œ Ω∫∆˘
-                if (rand > 98)
+                switch (generator.ItemGrade)
                 {
-                    foreach (BaseItemList list in generatorData.Generator.SpawnItemLIst)
-                    {
-                        if (list is GeneratorItemList) SpawnItem(list, currentItemLevel);
-                    }
-                }
-                else 
-                {
-                    foreach (BaseItemList list in generatorData.Generator.SpawnItemLIst)
-                        if(list is BlockItemList) SpawnItem(list, currentItemLevel);
-                }
-            }
-        }
-
-        private void SpawnItem(BaseItemList list, int currentItemLevel)
-        {
-            bool isBlock = list is BlockItemList;
-            float rand = Random.Range(0, 1f);
-            float currentWeight = 0;
-
-            switch (list.ItemGrade)
-            {
-                case ItemGrade.Normal:
-                    if (normalRate.TryGetValue(currentItemLevel, out List<float> rates))
-                    {
-                        for (int i = 0; i < rates.Count; i++)
+                    case ItemGrade.Normal:  //Pet, Dco
+                        if (normalRate.TryGetValue(currentItemLevel, out List<float> normalRates))
                         {
-                            currentWeight += rates[i];
-
-                            if (rand <= currentWeight)
+                            if (generator.GeneratorType == ItemGeneratorType.Dco)
                             {
-                                if (isBlock)
-                                {
-                                    BlockItemList blockList = list as BlockItemList;
-                                    string id = blockList.ItemDataList[i].ItemID;
-                                    PrefabGenerator newItem = Instantiate(PrefabGenerator);
-                                    newItem.SetItemInfo(id, 1);
+                                //spawnListÏóê Îì§Ïñ¥ÏûàÎäî ÏÉùÏÑ±Í∏∞ Î¶¨Ïä§Ìä∏Îì§ Ï§ë ÌïòÎÇòÎ•º Í≥®ÎùºÏÑú ÏïÑÏù¥ÌÖúÏùÑ ÎΩëÎäîÎã§
+                                GeneratorItemList gil = generator.SpawnList[Random.Range(0, generator.SpawnList.Count)] as GeneratorItemList;
 
-                                    //«ÿ¥Á æ∆¿Ãµ∏¶ ∞°¡¯ æ∆¿Ã≈€ ª˝º∫
-                                    BaseItemData item = GameManager.Instance.BlockItemDB.GetItemById(id);
-                                    
+                                for (int i = 0; i < normalRates.Count; i++)
+                                {
+                                    currentWeight += normalRates[i];
+
+                                    if (rand < currentWeight)
+                                    {
+                                        GeneratorItemData gid = gil.ItemDataList[i];
+                                        return gid.ItemID;
+                                    }
                                 }
-                                
-                                return;
+                            }
+                            else
+                            {
+                                int petRand = Random.Range(0, 100);
+
+                                if (petRand < 98) //pet blockItem Ìò∏Ï∂ú
+                                {
+                                    for (int i = 0; i < normalRates.Count; i++)
+                                    {
+                                        currentWeight += normalRates[i];
+
+                                        if (rand < currentWeight)
+                                        {
+                                            //i Î†àÎ≤® ÌÖú Ìò∏Ï∂ú
+                                            BlockItemList bil = generator.SpawnList.OfType<BlockItemList>().FirstOrDefault();
+                                            BlockItemData bid = bil.ItemDataList[i];
+
+                                            return bid.ItemID;
+                                        }
+                                    }
+                                }
+                                else //dco generatorItem Ìò∏Ï∂ú :: 1Î†ôÏßúÎ¶¨ ÏÉùÏÑ±Í∏∞ ÏïÑÏù¥ÌÖúÏùÑ ÎΩëÎäîÎã§
+                                { 
+                                    GeneratorItemList gil = generator.SpawnList.OfType<GeneratorItemList>().FirstOrDefault();
+                                    GeneratorItemData gid = gil.ItemDataList[0];
+
+                                    return gid.ItemID;
+                                }
                             }
                         }
-                    }
-                    break;
-                case ItemGrade.Rare:
-                    break;
+                        break;
+                    case ItemGrade.Rare:    // Í∑∏ Ïô∏
+                        if (rareRate.TryGetValue(currentItemLevel, out List<float> rareRates))
+                        { 
+                            
+                        }
+                        break;
+                }
             }
+
+            return "";
+        }
+
+        private void SpawnRandomItem()
+        { 
+            
         }
     }
 }
