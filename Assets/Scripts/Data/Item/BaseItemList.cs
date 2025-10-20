@@ -78,7 +78,6 @@ namespace DreamNest
         [SerializeField] private ItemBlockType itemBlockType;
         [SerializeField] private ItemGeneratorType itemGeneratorType;
         
-
         public ItemMainType ItemMainType => itemMainType;
         public ItemBlockType ItemBlockType => itemBlockType;
         public ItemGeneratorType ItemGeneratorType => itemGeneratorType;
@@ -115,9 +114,6 @@ namespace DreamNest
                     EditorGUILayout.PropertyField(itemGeneratorTypeProp);
                     break;
             }
-
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("itemDataList"));
-            serializedObject.ApplyModifiedProperties();
         }
     }
 }

@@ -28,11 +28,7 @@ namespace DreamNest
         private void Start()
         {
             blockItemDB.BuildDictionary();
-
-            foreach (var generatorItemList in generatorItemDB.GeneratorItemList)
-            {
-                generatorItemList.InitializeSpawnList();
-            }
+            generatorItemDB.BuildDictionary();
         }
     }
 }

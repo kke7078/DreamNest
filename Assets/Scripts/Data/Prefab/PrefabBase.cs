@@ -6,14 +6,17 @@ using UnityEngine.EventSystems;
 
 namespace DreamNest
 {
-    public class PrefabBase : MonoBehaviour, IItemBaseData, IPointerClickHandler
+    public abstract class PrefabBase : MonoBehaviour, IItemBaseData, IPointerClickHandler
         /*, IBeginDragHandler, IDragHandler, IEndDragHandler*/
     {
         private float lastClickTime = 0f;
         private const float doubleClickCheckTime = 0.25f;   //0.25초 이내면 더블 클릭
 
-        [field: SerializeField] public string ItemID { get; private set; }
-        [field: SerializeField] public int ItemLevel { get; private set; }
+        [field: SerializeField] public string ItemID { get; protected set; }
+        [field: SerializeField] public int ItemLevel { get; protected set; }
+
+        //아이템 정보 세팅
+        protected abstract void InitItem(string id);
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -39,15 +42,6 @@ namespace DreamNest
             Debug.Log("싱글클릭");
         }
 
-        protected virtual void OnDoubleClick() 
-        {
-            Debug.Log("더블클릭");
-        }
-
-        public void SetItemInfo(string id, int level)
-        {
-            ItemID = id;
-            ItemLevel = level;
-        }
+        protected virtual void OnDoubleClick() {}
     }
 }
