@@ -10,10 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49b980428891e594c9ec90a67a593560, type: 3}
-  m_Name: New Block Item List
+  m_Name: Pet Block Item List 1
   m_EditorClassIdentifier: 
   itemMainType: 0
-  itemBlockType: 3
+  itemBlockType: 0
   itemGeneratorType: 0
-  itemGrade: 0
-  itemDataList: []
+  listCount: 2
+  itemDataList:
+  - itemID: Pet201
+    itemLevel: 1
+  - itemID: Pet202
+    itemLevel: 2
+  - itemID: Pet203
+    itemLevel: 3
+  - itemID: Pet204
+    itemLevel: 4
+  - itemID: Pet205
+    itemLevel: 5

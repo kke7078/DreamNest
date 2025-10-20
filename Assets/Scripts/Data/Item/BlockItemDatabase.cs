@@ -26,11 +26,12 @@ namespace DreamNest
             foreach (var list in blockItemList) //블록아이템들의 리스트 순회
             {
                 int index = 0;
+                list.ListCount = 1;   //리스트들의 순서를 1로 초기화
 
                 foreach (var item in list.ItemDataList)
                 {
                     index++;
-                    string id = item.SetItemInfo(list, item, index);
+                    string id = item.SetItemInfo(list, index);
 
                     if (!itemDict.ContainsKey(id))
                     {

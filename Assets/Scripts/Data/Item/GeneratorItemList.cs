@@ -15,37 +15,31 @@ namespace DreamNest
 
         public ItemGrade ItemGrade => itemGrade;
         public List<GeneratorItemData> ItemDataList => itemDataList;
+    }
 
-        public void SetMaxGenerationCount()
+    [CustomEditor(typeof(GeneratorItemList))]
+    public class GeneratorItemListEditor : BaseItemListEditor
+    {
+        private SerializedProperty itemGradeProp;
+        private SerializedProperty itemDataListProp;
+
+        protected override void OnEnable()
         {
-            foreach (var item in itemDataList)
-            {
-                switch (ItemGrade)
-                {
-                    case ItemGrade.Normal:
-                        GetMaxGenerationCount(2, item); break;
-                    case ItemGrade.Rare:
-                        GetMaxGenerationCount(1.5f, item); break;
-                }
-            }
+            base.OnEnable();
+
+            itemGradeProp = serializedObject.FindProperty("itemGrade");
+            itemDataListProp = serializedObject.FindProperty("itemDataList");
         }
 
-        private void GetMaxGenerationCount(float multiple, GeneratorItemData data)
+        public override void OnInspectorGUI()
         {
-            if(data != null) data.MaxGenerationCount = Mathf.Floor(data.ItemLevel * multiple);
-        }
+            base.OnInspectorGUI();
 
-        [CustomEditor(typeof(GeneratorItemList))]
-        public class GeneratorItemListEditor : BaseItemListEditor
-        {
-            public override void OnInspectorGUI()
-            {
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("itemGrade"));
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(itemGradeProp);
+            EditorGUILayout.PropertyField(itemDataListProp);
 
-                base.OnInspectorGUI();
-
-                serializedObject.ApplyModifiedProperties();
-            }
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }
