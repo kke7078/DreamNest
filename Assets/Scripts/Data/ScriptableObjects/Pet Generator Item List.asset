@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a3f3520835f54e4f8445f9e22442b5e, type: 3}
   m_Name: Pet Generator Item List
   m_EditorClassIdentifier: 
-  itemMainType: 1
+  itemMainType: 0
   itemBlockType: 0
   itemGeneratorType: 0
   itemGrade: 0
-  spawnItemList:
-  - {fileID: 11400000, guid: d586912625709c7408ba4fc45c72b980, type: 2}
   itemDataList:
   - itemID: Pet001
     itemLevel: 1

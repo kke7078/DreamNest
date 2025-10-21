@@ -15,7 +15,7 @@ MonoBehaviour:
   itemMainType: 0
   itemBlockType: 0
   itemGeneratorType: 0
-  itemGrade: 0
+  listCount: 1
   itemDataList:
   - itemID: Pet101
     itemLevel: 1
@@ -23,5 +23,3 @@ MonoBehaviour:
     itemLevel: 2
   - itemID: Pet103
     itemLevel: 3
-  - itemID: Pet104
-    itemLevel: 4

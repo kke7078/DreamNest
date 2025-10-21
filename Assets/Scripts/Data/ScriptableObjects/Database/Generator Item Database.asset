@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Generator Item Database
   m_EditorClassIdentifier: 
   generatorItemList:
-  - {fileID: 11400000, guid: bc781e443d34bc44f90220b1941ce23b, type: 2}
+  - {fileID: 11400000, guid: 6477c59e37b45224aac3d7eae7c5e113, type: 2}
   - {fileID: 11400000, guid: e2293e03b791b8144b2a1626c2f3b914, type: 2}

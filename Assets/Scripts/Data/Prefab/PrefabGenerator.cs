@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Tilemaps;
@@ -40,42 +41,48 @@ namespace DreamNest
         {
             GeneratorItemInfo data = GameManager.Instance.GeneratorItemDB.GetItemById(id);
 
-            if (data != null) 
+            if (data == null) return;
+
+            //PrefabBase의 필드
+            ItemLevel = data.Data.ItemLevel;
+
+            //PrefabGenerator의 필드
+            generatorType = data.List.ItemGeneratorType;
+            itemGrade = data.List.ItemGrade;
+            itemGeneratorCount = data.Data.MaxGenerationCount;
+
+            if (spawnList.Count == 0)
             {
-                //PrefabBase의 필드
-                ItemLevel = data.Data.ItemLevel;
+                //카테고리가 서로 일치하는 리스트
+                var mainList = GameManager.Instance.BlockItemDB.BlockItemList.Where(list => list.ItemBlockType.ToString() == generatorType.ToString());
+                AddSpawnList(spawnList, mainList);
 
-                //PrefabGenerator의 필드
-                generatorType = data.List.ItemGeneratorType;
-                itemGrade = data.List.ItemGrade;
-                itemGeneratorCount = data.Data.MaxGenerationCount;
+                IEnumerable<BaseItemList> exceptionList = Enumerable.Empty<BaseItemList>();   //초기화
 
-                if (spawnList.Count == 0)
+                //예외 카테고리 세팅
+                switch (generatorType)
                 {
-                    foreach (var list in GameManager.Instance.BlockItemDB.BlockItemList)
-                    {
-                        if (list.ItemBlockType.ToString() == generatorType.ToString())
-                        {
-                            if (!spawnList.Contains(list)) spawnList.Add(list);
-                        }
-                    }
+                    case ItemGeneratorType.Pet:
+                        //Dco 생성기 리스트 예외 추가
+                        exceptionList = GameManager.Instance.GeneratorItemDB.GeneratorItemList.Where(list => list.ItemGeneratorType == ItemGeneratorType.Dco);
+                        break;
 
-                    //예외 카테고리 세팅
-                    switch(generatorType)
-                    {
-                        case ItemGeneratorType.Pet:
-                            foreach (var list in GameManager.Instance.GeneratorItemDB.GeneratorItemList)
-                            {
-                                if(list.ItemGeneratorType == ItemGeneratorType.Dco)
-                                {
-                                    if (!spawnList.Contains(list)) spawnList.Add(list);
-                                }
-                            }
-
-                            break;
-                    }
+                    case ItemGeneratorType.Dco:
+                        exceptionList = GameManager.Instance.GeneratorItemDB.GeneratorItemList.
+                            Where(list => list.ItemGeneratorType != ItemGeneratorType.Pet && list.ItemGeneratorType != ItemGeneratorType.Dco);
+                        break;
                 }
+
+                AddSpawnList(spawnList, exceptionList);
             }
+        }
+
+        //IEnumerable<BaseItemList> : 어떠한 항목을 순차적으로 열거할 수 있는 목록
+        //Linq를 사용하지 않으려면, List로 받아서 foreach를 사용해도 됨
+        private void AddSpawnList(List<BaseItemList> spawnList, IEnumerable<BaseItemList> currentList)  
+        {
+            var addItem = currentList.Where(list => !spawnList.Contains(list));
+            spawnList.AddRange(addItem);
         }
 
         //더블 클릭

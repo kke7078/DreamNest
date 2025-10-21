@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dco Generator Item List
   m_EditorClassIdentifier: 
   itemMainType: 1
-  itemBlockType: 3
+  itemBlockType: 0
   itemGeneratorType: 1
   itemGrade: 0
   itemDataList:

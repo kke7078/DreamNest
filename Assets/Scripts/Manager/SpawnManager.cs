@@ -23,6 +23,7 @@ namespace DreamNest
         public SpawnRateTable SpawnRateNormal => spawnRateNormal;
         public SpawnRateTable SpawnRateRare => spawnRateRare;
         public PrefabGenerator PrefabGenerator => prefabGenerator;
+        public PrefabBlock PrefabBlock => prefabBlock;
 
         Dictionary<int, List<float>> normalRate = new Dictionary<int, List<float>>();
         Dictionary<int, List<float>> rareRate = new Dictionary<int, List<float>>();
@@ -57,13 +58,12 @@ namespace DreamNest
             if (minSpawnLevel > currentItemLevel) return false;
 
             //아이템 리스트 뽑기
-            string id = SpawnRandomItem(generator, currentItemLevel);
-            Debug.Log(id);
+            SpawnRandomItem(generator, currentItemLevel);
 
             return true;
         }
-
-        private string SpawnRandomItem(PrefabGenerator generator, int currentItemLevel)
+        
+        private void SpawnRandomItem(PrefabGenerator generator, int currentItemLevel)
         {
             if (generator != null)
             {
@@ -87,7 +87,9 @@ namespace DreamNest
                                     if (rand < currentWeight)
                                     {
                                         GeneratorItemData gid = gil.ItemDataList[i];
-                                        return gid.ItemID;
+
+                                        CreateItem(gid.ItemID);
+                                        return;
                                     }
                                 }
                             }
@@ -107,7 +109,8 @@ namespace DreamNest
                                             BlockItemList bil = generator.SpawnList.OfType<BlockItemList>().FirstOrDefault();
                                             BlockItemData bid = bil.ItemDataList[i];
 
-                                            return bid.ItemID;
+                                            CreateItem(bid.ItemID);
+                                            return;
                                         }
                                     }
                                 }
@@ -116,26 +119,49 @@ namespace DreamNest
                                     GeneratorItemList gil = generator.SpawnList.OfType<GeneratorItemList>().FirstOrDefault();
                                     GeneratorItemData gid = gil.ItemDataList[0];
 
-                                    return gid.ItemID;
+                                    CreateItem(gid.ItemID);
+                                    return;
                                 }
                             }
                         }
                         break;
                     case ItemGrade.Rare:    // 그 외
                         if (rareRate.TryGetValue(currentItemLevel, out List<float> rareRates))
-                        { 
-                            
+                        {
+                            for (int i = 0; i < rareRates.Count; i++)
+                            {
+                                currentWeight += rareRates[i];
+
+                                if (rand < currentWeight)
+                                {
+                                    //i 레벨 템 호출
+                                    BlockItemList bil = generator.SpawnList.OfType<BlockItemList>().FirstOrDefault();
+                                    BlockItemData bid = bil.ItemDataList[i];
+
+                                    CreateItem(bid.ItemID);
+                                    return;
+                                }
+                            }
                         }
                         break;
                 }
             }
-
-            return "";
         }
 
-        private void SpawnRandomItem()
-        { 
-            
+        private void CreateItem(string id)
+        {
+            PrefabBase prefObj = null;
+
+            if (GameManager.Instance.GeneratorItemDB.GetItemById(id) == null)
+            {
+                prefObj = Instantiate(PrefabBlock);
+            }
+            else
+            {
+                prefObj = Instantiate(PrefabGenerator);
+            }
+
+            SlotManager.Instance.SetSlotItem(prefObj);
         }
     }
 }
