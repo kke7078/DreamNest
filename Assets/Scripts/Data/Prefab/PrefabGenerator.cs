@@ -18,13 +18,13 @@ namespace DreamNest
         [SerializeField] ItemGeneratorType generatorType;
         [SerializeField] ItemGrade itemGrade;
         [SerializeField] float itemGeneratorCount;
-        [SerializeField] float itemCooltimeDuration;
+        [SerializeField] float itemCooltime;
 
         public List<BaseItemList> SpawnList => spawnList;
         public ItemGeneratorType GeneratorType => generatorType;
         public ItemGrade ItemGrade => itemGrade;
         public float ItemGeneratorCount => itemGeneratorCount;
-        public float ItemCooltimeDuration => itemCooltimeDuration;
+        public float ItemCooltime => itemCooltime;
 
 
         private void Awake()
@@ -32,24 +32,21 @@ namespace DreamNest
             spawnManager = SpawnManager.Instance;
         }
 
-        public void Start()
-        {
-            InitItem("Pet006"); //테스트용
-        }
-
-        protected override void InitItem(string id)
+        public override void InitItem(string id)
         {
             GeneratorItemInfo data = GameManager.Instance.GeneratorItemDB.GetItemById(id);
 
             if (data == null) return;
 
             //PrefabBase의 필드
+            ItemID = id;
             ItemLevel = data.Data.ItemLevel;
 
             //PrefabGenerator의 필드
             generatorType = data.List.ItemGeneratorType;
             itemGrade = data.List.ItemGrade;
             itemGeneratorCount = data.Data.MaxGenerationCount;
+            itemCooltime = data.List.ItemCooltime;
 
             if (spawnList.Count == 0)
             {
@@ -61,7 +58,7 @@ namespace DreamNest
 
                 //예외 카테고리 세팅
                 switch (generatorType)
-                {
+                {   
                     case ItemGeneratorType.Pet:
                         //Dco 생성기 리스트 예외 추가
                         exceptionList = GameManager.Instance.GeneratorItemDB.GeneratorItemList.Where(list => list.ItemGeneratorType == ItemGeneratorType.Dco);
@@ -122,7 +119,7 @@ namespace DreamNest
 
             Debug.Log("쿨타임 실행");
 
-            yield return new WaitForSeconds(ItemCooltimeDuration);
+            yield return new WaitForSeconds(ItemCooltime);
 
             Debug.Log("쿨타임 종료");
 

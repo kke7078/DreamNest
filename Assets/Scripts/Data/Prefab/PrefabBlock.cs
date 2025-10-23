@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,9 +13,15 @@ namespace DreamNest
 
     public class PrefabBlock : PrefabBase
     {
-        protected override void InitItem(string id)
+        public override void InitItem(string id)
         {
+            BlockItemData data = GameManager.Instance.BlockItemDB.GetItemById(id);
 
+            if (data == null) return;
+
+            //PrefabBase의 필드
+            ItemID = id;
+            ItemLevel = data.ItemLevel;
         }
     }
 }
