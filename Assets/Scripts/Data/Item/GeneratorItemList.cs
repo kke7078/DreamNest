@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -11,9 +12,11 @@ namespace DreamNest
     public class GeneratorItemList : BaseItemList
     {
         [SerializeField] private ItemGrade itemGrade;
+        [SerializeField] private int itemCooltime;
         [SerializeField] private List<GeneratorItemData> itemDataList;
 
         public ItemGrade ItemGrade => itemGrade;
+        public int ItemCooltime => itemCooltime;
         public List<GeneratorItemData> ItemDataList => itemDataList;
     }
 
@@ -21,6 +24,7 @@ namespace DreamNest
     public class GeneratorItemListEditor : BaseItemListEditor
     {
         private SerializedProperty itemGradeProp;
+        private SerializedProperty itemCooltimeProp;
         private SerializedProperty itemDataListProp;
 
         protected override void OnEnable()
@@ -28,6 +32,7 @@ namespace DreamNest
             base.OnEnable();
 
             itemGradeProp = serializedObject.FindProperty("itemGrade");
+            itemCooltimeProp = serializedObject.FindProperty("itemCooltime");
             itemDataListProp = serializedObject.FindProperty("itemDataList");
         }
 
@@ -37,6 +42,7 @@ namespace DreamNest
 
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(itemGradeProp);
+            EditorGUILayout.PropertyField(itemCooltimeProp);
             EditorGUILayout.PropertyField(itemDataListProp);
 
             serializedObject.ApplyModifiedProperties();
